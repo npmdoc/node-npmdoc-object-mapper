@@ -1,0 +1,464 @@
+<html><head></head><body><div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a href="https://github.com/wankdanker/node-object-mapper#readme">object-mapper (v3.0.1)</a>
+</h1>
+<h4>Copy properties from one object to another.</h4>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.object-mapper">module object-mapper</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.object-mapper.object-mapper">
+            function <span class="apidocSignatureSpan"></span>object-mapper
+            <span class="apidocSignatureSpan">(fromObject, toObject, propertyMap)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.object-mapper.getKeyValue">
+            function <span class="apidocSignatureSpan">object-mapper.</span>getKeyValue
+            <span class="apidocSignatureSpan">(fromObject, fromKey)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.object-mapper.merge">
+            function <span class="apidocSignatureSpan">object-mapper.</span>merge
+            <span class="apidocSignatureSpan">(fromObject, toObject, propertyMap)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.object-mapper.setKeyValue">
+            function <span class="apidocSignatureSpan">object-mapper.</span>setKeyValue
+            <span class="apidocSignatureSpan">(baseObject, destinationKey, fromValue)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.object-mapper.merge">module object-mapper.merge</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.object-mapper.merge.merge">
+            function <span class="apidocSignatureSpan">object-mapper.</span>merge
+            <span class="apidocSignatureSpan">(fromObject, toObject, propertyMap)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.object-mapper.merge.getKeyValue">
+            function <span class="apidocSignatureSpan">object-mapper.merge.</span>getKeyValue
+            <span class="apidocSignatureSpan">(fromObject, fromKey)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.object-mapper.merge.setKeyValue">
+            function <span class="apidocSignatureSpan">object-mapper.merge.</span>setKeyValue
+            <span class="apidocSignatureSpan">(baseObject, destinationKey, fromValue)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.object-mapper" id="apidoc.module.object-mapper">module object-mapper</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.object-mapper.object-mapper" id="apidoc.element.object-mapper.object-mapper">
+        function <span class="apidocSignatureSpan"></span>object-mapper
+        <span class="apidocSignatureSpan">(fromObject, toObject, propertyMap)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function ObjectMapper(fromObject, toObject, propertyMap) {
+  var propertyKeys;
+
+  if (typeof propertyMap === 'undefined') {
+    propertyMap = toObject;
+    toObject = _undefined;
+  }
+
+  if (typeof toObject === 'undefined') {
+    toObject = {};
+  }
+
+  propertyKeys = Object.keys(propertyMap);
+
+  return _map(fromObject, toObject, propertyMap, propertyKeys);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.object-mapper.getKeyValue" id="apidoc.element.object-mapper.getKeyValue">
+        function <span class="apidocSignatureSpan">object-mapper.</span>getKeyValue
+        <span class="apidocSignatureSpan">(fromObject, fromKey)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function GetKeyValue(fromObject, fromKey) {
+  var regDot = /\./g
+    , keys
+    , key
+    , result
+    ;
+
+  keys = fromKey.split(regDot);
+  key = keys.splice(0, 1);
+
+  result = _getValue(fromObject, key[0], keys);
+
+  if (Array.isArray(result)) {
+    if (result.length) {
+      result = result.reduce(function (a, b) {
+        if (Array.isArray(a) &amp;&amp; Array.isArray(b)) {
+          return a.concat(b);
+        } else if (Array.isArray(a)) {
+          a.push(b);
+          return a;
+        } else {
+          return [a, b];
+        }
+      });
+    }
+    if (!Array.isArray(result)) {
+      result = [result];
+    }
+  }
+
+  return result;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+This function is also exported directly from `require('object-mapper')` (ie: `var merge = require('object-mapper&amp;#
+x27;);`)
+
+- **sourceObject** is the object FROM which properties will be copied.
+- **destinationObject** [OPTIONAL] is the object TO which properties will be copied.
+- **mapObject** is the object which defines how properties are copied from
+**sourceObject** to **destinationObject**
+
+### .<span class="apidocCodeKeywordSpan">getKeyValue</span>(sourceObject, key);
+
+Get the key value within **sourceObject**, going deep within the object if necessary.
+This method is used internally but is exposed because it may be of use elsewhere
+with other projects.
+
+- **sourceObject** is the object from which you would like to get a property/key value.
+- **key** is the name of the property/key you would like to retrieve.
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.object-mapper.merge" id="apidoc.element.object-mapper.merge">
+        function <span class="apidocSignatureSpan">object-mapper.</span>merge
+        <span class="apidocSignatureSpan">(fromObject, toObject, propertyMap)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function ObjectMapper(fromObject, toObject, propertyMap) {
+  var propertyKeys;
+
+  if (typeof propertyMap === 'undefined') {
+    propertyMap = toObject;
+    toObject = _undefined;
+  }
+
+  if (typeof toObject === 'undefined') {
+    toObject = {};
+  }
+
+  propertyKeys = Object.keys(propertyMap);
+
+  return _map(fromObject, toObject, propertyMap, propertyKeys);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+{
+ canBeNull:null
+}
+```
+
+##Methods##
+
+### .<span class="apidocCodeKeywordSpan">merge</span>(sourceObject[, destinationObject], mapObject);
+
+Copy properties from **sourceObject** to **destinationObject** by following the
+mapping defined by **mapObject**
+
+This function is also exported directly from `require('object-mapper')` (ie: `var merge = require('object-mapper&amp;#
+x27;);`)
+
+- **sourceObject** is the object FROM which properties will be copied.
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.object-mapper.setKeyValue" id="apidoc.element.object-mapper.setKeyValue">
+        function <span class="apidocSignatureSpan">object-mapper.</span>setKeyValue
+        <span class="apidocSignatureSpan">(baseObject, destinationKey, fromValue)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function SetKeyValue(baseObject, destinationKey, fromValue) {
+  var regDot = /\./g
+    , keys
+    , key
+    ;
+
+
+  keys = destinationKey.split(regDot);
+  key = keys.splice(0, 1);
+
+  return _setValue(baseObject, key[0], keys, fromValue);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+Get the key value within **sourceObject**, going deep within the object if necessary.
+This method is used internally but is exposed because it may be of use elsewhere
+with other projects.
+
+- **sourceObject** is the object from which you would like to get a property/key value.
+- **key** is the name of the property/key you would like to retrieve.
+
+### .<span class="apidocCodeKeywordSpan">setKeyValue</span>(destinationObject, key, value);
+
+Set the key value within **destinationObject**, going deep within the object if necessary.This
+method is used internally but is exposed because it may be of use elsewhere with
+other projects.
+
+- **destinationObject** is the object within which the property/key will be set.
+- **key** is the name of the property/key which will be set.
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.object-mapper.merge" id="apidoc.module.object-mapper.merge">module object-mapper.merge</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.object-mapper.merge.merge" id="apidoc.element.object-mapper.merge.merge">
+        function <span class="apidocSignatureSpan">object-mapper.</span>merge
+        <span class="apidocSignatureSpan">(fromObject, toObject, propertyMap)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function ObjectMapper(fromObject, toObject, propertyMap) {
+  var propertyKeys;
+
+  if (typeof propertyMap === 'undefined') {
+    propertyMap = toObject;
+    toObject = _undefined;
+  }
+
+  if (typeof toObject === 'undefined') {
+    toObject = {};
+  }
+
+  propertyKeys = Object.keys(propertyMap);
+
+  return _map(fromObject, toObject, propertyMap, propertyKeys);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+{
+ canBeNull:null
+}
+```
+
+##Methods##
+
+### .<span class="apidocCodeKeywordSpan">merge</span>(sourceObject[, destinationObject], mapObject);
+
+Copy properties from **sourceObject** to **destinationObject** by following the
+mapping defined by **mapObject**
+
+This function is also exported directly from `require('object-mapper')` (ie: `var merge = require('object-mapper&amp;#
+x27;);`)
+
+- **sourceObject** is the object FROM which properties will be copied.
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.object-mapper.merge.getKeyValue" id="apidoc.element.object-mapper.merge.getKeyValue">
+        function <span class="apidocSignatureSpan">object-mapper.merge.</span>getKeyValue
+        <span class="apidocSignatureSpan">(fromObject, fromKey)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function GetKeyValue(fromObject, fromKey) {
+  var regDot = /\./g
+    , keys
+    , key
+    , result
+    ;
+
+  keys = fromKey.split(regDot);
+  key = keys.splice(0, 1);
+
+  result = _getValue(fromObject, key[0], keys);
+
+  if (Array.isArray(result)) {
+    if (result.length) {
+      result = result.reduce(function (a, b) {
+        if (Array.isArray(a) &amp;&amp; Array.isArray(b)) {
+          return a.concat(b);
+        } else if (Array.isArray(a)) {
+          a.push(b);
+          return a;
+        } else {
+          return [a, b];
+        }
+      });
+    }
+    if (!Array.isArray(result)) {
+      result = [result];
+    }
+  }
+
+  return result;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+This function is also exported directly from `require('object-mapper')` (ie: `var merge = require('object-mapper&amp;#
+x27;);`)
+
+- **sourceObject** is the object FROM which properties will be copied.
+- **destinationObject** [OPTIONAL] is the object TO which properties will be copied.
+- **mapObject** is the object which defines how properties are copied from
+**sourceObject** to **destinationObject**
+
+### .<span class="apidocCodeKeywordSpan">getKeyValue</span>(sourceObject, key);
+
+Get the key value within **sourceObject**, going deep within the object if necessary.
+This method is used internally but is exposed because it may be of use elsewhere
+with other projects.
+
+- **sourceObject** is the object from which you would like to get a property/key value.
+- **key** is the name of the property/key you would like to retrieve.
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.object-mapper.merge.setKeyValue" id="apidoc.element.object-mapper.merge.setKeyValue">
+        function <span class="apidocSignatureSpan">object-mapper.merge.</span>setKeyValue
+        <span class="apidocSignatureSpan">(baseObject, destinationKey, fromValue)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function SetKeyValue(baseObject, destinationKey, fromValue) {
+  var regDot = /\./g
+    , keys
+    , key
+    ;
+
+
+  keys = destinationKey.split(regDot);
+  key = keys.splice(0, 1);
+
+  return _setValue(baseObject, key[0], keys, fromValue);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+Get the key value within **sourceObject**, going deep within the object if necessary.
+This method is used internally but is exposed because it may be of use elsewhere
+with other projects.
+
+- **sourceObject** is the object from which you would like to get a property/key value.
+- **key** is the name of the property/key you would like to retrieve.
+
+### .<span class="apidocCodeKeywordSpan">setKeyValue</span>(destinationObject, key, value);
+
+Set the key value within **destinationObject**, going deep within the object if necessary.This
+method is used internally but is exposed because it may be of use elsewhere with
+other projects.
+
+- **destinationObject** is the object within which the property/key will be set.
+- **key** is the name of the property/key which will be set.
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
+</body></html>
